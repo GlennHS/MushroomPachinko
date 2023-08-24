@@ -2,5 +2,6 @@ public enum PegType
 {
     Red,
     Green,
-    Blue
+    Blue,
+    Orange
 }

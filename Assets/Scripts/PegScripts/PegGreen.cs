@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PegGreen : Peg
 {
-    public GameObject ball;
+    //public GameObject ball;
 
     private GameObject newBall;
 
@@ -19,7 +19,7 @@ public class PegGreen : Peg
 
     public override void OnCollisionEnter2D(Collision2D collision)
     {
-        newBall = Instantiate(ball, transform.position, Quaternion.identity);
+        newBall = Instantiate(collision.gameObject, transform.position, Quaternion.identity);
         float upForce = Random.Range(-0.5f, -2.5f);
         float sideForce = Random.Range(-2.5f, 2.5f);
         newBall.GetComponent<Rigidbody2D>().AddForce(new Vector2 (upForce, sideForce), ForceMode2D.Impulse);

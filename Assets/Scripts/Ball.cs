@@ -15,11 +15,28 @@ public class Ball : MonoBehaviour
         }
     }
 
-    private void OnBecameInvisible()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
-        GameManager.instance.ballDropping = false;
-        GameManager.instance.UpdateText();
-        GameManager.instance.CheckGameOver();
+        if (collision.gameObject.CompareTag("BallDestroyer"))
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(
+            transform.position.x < Camera.main.ScreenToWorldPoint(Camera.main.pixelRect.min).x ||
+            transform.position.x > Camera.main.ScreenToWorldPoint(Camera.main.pixelRect.max).x
+        ) { Destroy(gameObject); }
+    }
+
+    private void OnDestroy()
+    {
+        if(FindObjectsOfType<Ball>().Length == 0)
+        {
+            GameManager.instance.ballDropping = false;
+            GameManager.instance.CheckGameOver();
+        }
     }
 }

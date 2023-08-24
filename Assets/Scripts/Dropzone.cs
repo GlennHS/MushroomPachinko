@@ -14,11 +14,13 @@ public class Dropzone : MonoBehaviour
             GameManager.instance.ballsRemaining--;
             GameManager.instance.bluePegsHitThisDrop = 0;
             GameManager.instance.hitPegThisDrop = false;
+            GameManager.instance.bouncinessIncreaseFromOrange = 0.0f;
             GameManager.instance.UpdateText();
 
             Vector3 actualMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             actualMousePos.z = 1;
-            Instantiate(ball, actualMousePos, Quaternion.identity);
+            GameObject newBall = Instantiate(ball, actualMousePos, Quaternion.identity);
+            newBall.GetComponent<Rigidbody2D>().sharedMaterial = GameManager.instance.originalBallMaterial;
         }
     }
 }

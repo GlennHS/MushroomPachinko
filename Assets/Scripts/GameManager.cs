@@ -19,10 +19,13 @@ public class GameManager : MonoBehaviour
     public GameObject leftWall;
     public GameObject rightWall;
 
+    public PhysicsMaterial2D originalBallMaterial;
+
     [HideInInspector] public int score;
     [HideInInspector] public bool ballDropping;
     [HideInInspector] public int bluePegsHitThisDrop;
     [HideInInspector] public bool hitPegThisDrop;
+    [HideInInspector] public float bouncinessIncreaseFromOrange = 0.0f;
 
     private AudioSource audioSource;
     private bool gameEnded;
@@ -41,24 +44,7 @@ public class GameManager : MonoBehaviour
         gameEnded = false;
 
         gameOverText.gameObject.SetActive(false);
-
-        // SetUpWallColliders();
     }
-
-    //public void SetUpWallColliders()
-    //{
-    //    Rect rect = Camera.main.pixelRect;
-    //    float cx = rect.center.x;
-    //    float cy = rect.center.y;
-    //    float cz = Vector3.zero.z;
-    //    Vector3 v = new Vector3(cx, cy, cz);
-    //    Vector3 w = new Vector3(cx, cy, cz);
-    //    v.x = rect.xMin;
-    //    w.x = rect.xMax;
-
-    //    leftWall.transform.position = Camera.main.ScreenToWorldPoint(v);
-    //    rightWall.transform.position = Camera.main.ScreenToWorldPoint(w);
-    //}
 
     public void UpdateText()
     {
@@ -68,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckGameOver()
     {
-        if (gameEnded || (ballsRemaining > 0 && FindAnyObjectByType<Peg>())) return;
+        if (gameEnded || FindAnyObjectByType<Ball>() || (ballsRemaining > 0 && FindAnyObjectByType<Peg>())) return;
 
         if (FindAnyObjectByType<Peg>() != null)
         {
@@ -82,6 +68,7 @@ public class GameManager : MonoBehaviour
         }
 
         audioSource.Play();
+        UpdateText();
         gameOverText.gameObject.SetActive(true);
         gameEnded = true;
     }
