@@ -15,8 +15,12 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     public PegQuantity[] pegs;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
+    {
+        Spawn();
+    }
+
+    public void Spawn()
     {
         List<GameObject> currentPegs = new List<GameObject>();
 
