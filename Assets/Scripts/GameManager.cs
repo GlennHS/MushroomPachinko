@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     public PhysicsMaterial2D originalBallMaterial;
 
+    public List<GameObject> pegs;
+
     [HideInInspector] public int score;
     [HideInInspector] public bool ballDropping;
     [HideInInspector] public int bluePegsHitThisDrop;

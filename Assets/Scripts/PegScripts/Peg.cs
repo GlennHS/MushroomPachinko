@@ -15,7 +15,12 @@ public abstract class Peg : MonoBehaviour
 
     public virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(gameObject);
+        PegDestroyed();
+    }
+
+    public virtual void PegDestroyed()
+    {
+        gameObject.SetActive(false);
         GameManager.instance.hitPegThisDrop = true;
         GameManager.instance.score += scoreOnHit;
         GameManager.instance.UpdateText();

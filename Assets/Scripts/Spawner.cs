@@ -28,6 +28,8 @@ public class Spawner : MonoBehaviour
                 currentPegs.Add(Instantiate(pq.pegObject, proposedPosition, Quaternion.identity));
             }
         }
+
+        GameManager.instance.pegs = currentPegs;
     }
 
 
