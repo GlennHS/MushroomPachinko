@@ -22,7 +22,6 @@ public class PegPurple : Peg
         List<GameObject> disabledPegs = GameManager.instance.pegs.Where(go => !go.activeSelf).ToList();
         if(!allowPurpleResurrection)
             disabledPegs = disabledPegs.Where(go => go.GetComponent<PegPurple>() == null).ToList();
-        Debug.Log(disabledPegs.ToString());
 
         for(int i = 0; i < Mathf.Min(numPegsToEnable, disabledPegs.Count()); i++)
         {

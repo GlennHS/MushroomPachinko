@@ -20,4 +20,9 @@ public class UIManager : MonoBehaviour
     {
         creditsCanvas.enabled = false;
     }
+
+    public void RestartGame()
+    {
+        GameManager.instance.Restart();
+    }
 }

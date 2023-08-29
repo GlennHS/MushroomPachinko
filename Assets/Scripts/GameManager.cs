@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject leftWall;
     public GameObject rightWall;
+    public GameObject spawningArea;
 
     public PhysicsMaterial2D originalBallMaterial;
 
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     private AudioSource audioSource;
     private bool gameEnded;
+    private int maxBalls;
 
     // Start is called before the first frame update
     void Awake()
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
         bluePegsHitThisDrop = 0;
         audioSource = GetComponent<AudioSource>();
         gameEnded = false;
+        maxBalls = ballsRemaining;
 
         gameOverText.gameObject.SetActive(false);
     }
@@ -73,5 +76,24 @@ public class GameManager : MonoBehaviour
         UpdateText();
         gameOverText.gameObject.SetActive(true);
         gameEnded = true;
+    }
+
+    public void Restart()
+    {
+        foreach(GameObject go in pegs)
+            Destroy(go);
+        foreach(GameObject go in GameObject.FindGameObjectsWithTag("Ball"))
+            Destroy(go);
+
+        ballsRemaining = maxBalls;
+        pegs = new List<GameObject>();
+        ballDropping = false;
+        bluePegsHitThisDrop = 0;
+        score = 0;
+        gameEnded = false;
+
+        UpdateText();
+
+        spawningArea.GetComponent<Spawner>().Spawn();
     }
 }
