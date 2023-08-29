@@ -9,6 +9,7 @@ TagManager:
   - Ball
   - SceneEdge
   - BallDestroyer
+  - Spawner
   layers:
   - Default
   - TransparentFX
