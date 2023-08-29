@@ -6,7 +6,7 @@ using UnityEngine;
 public class PegOrange : Peg
 {
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
         base.Start();
 
@@ -14,7 +14,7 @@ public class PegOrange : Peg
         scoreOnHit = 10;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public override void OnCollisionEnter2D(Collision2D collision)
     {
         Rigidbody2D ballRb = collision.gameObject.GetComponent<Rigidbody2D>();
         GameManager.instance.bouncinessIncreaseFromOrange += 0.5f;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -17,16 +18,21 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach(PegQuantity pq in pegs)
+        List<GameObject> currentPegs = new List<GameObject>();
+
+        foreach (PegQuantity pq in pegs)
         {
-            for(int i = 0; i < pq.quantity; i++)
-                Instantiate(pq.pegObject, chooseSpawnLocation(pq.pegObject), Quaternion.identity);
+            for (int i = 0; i < pq.quantity; i++)
+            {
+                Vector2 proposedPosition = chooseSpawnLocation(pq.pegObject, currentPegs);
+                currentPegs.Add(Instantiate(pq.pegObject, proposedPosition, Quaternion.identity));
+            }
         }
     }
 
-    Vector2 chooseSpawnLocation(GameObject go)
+
+    Vector2 chooseSpawnLocation(GameObject go, List<GameObject> currentPegs)
     {
-        // Okay so I didn't account for those PHAT pegs...
         float pegLargestDimension = Mathf.Max(go.transform.localScale.x, go.transform.localScale.y);
 
         float xLowerBound = transform.position.x - (transform.localScale.x / 2) + pegLargestDimension;
@@ -34,6 +40,35 @@ public class Spawner : MonoBehaviour
         float xUpperBound = transform.position.x + (transform.localScale.x / 2) - pegLargestDimension;
         float yUpperBound = transform.position.y + (transform.localScale.y / 2) - pegLargestDimension;
 
-        return new Vector2(Random.Range(xLowerBound, xUpperBound), Random.Range(yLowerBound, yUpperBound));
+        int maxTries = 50;  // Maximum attempts to find a valid position
+        int currentTry = 0;
+        Vector2 proposedPosition = Vector2.zero;
+
+        while (currentTry < maxTries)
+        {
+            proposedPosition = new Vector2(Random.Range(xLowerBound, xUpperBound), Random.Range(yLowerBound, yUpperBound));
+
+            bool positionIsValid = true;
+            foreach (GameObject existingPeg in currentPegs)
+            {
+                float distance = Vector2.Distance(proposedPosition, existingPeg.transform.position);
+                if (distance < pegLargestDimension * 4)  // Adjust the factor as needed
+                {
+                    positionIsValid = false;
+                    break;
+                }
+            }
+
+            if (positionIsValid)
+            {
+                return proposedPosition;
+            }
+
+            currentTry++;
+        }
+
+        // If no valid position is found after maxTries, return a default position or handle it accordingly
+        Debug.Log("Spawning default case hit...");
+        return proposedPosition;
     }
 }
