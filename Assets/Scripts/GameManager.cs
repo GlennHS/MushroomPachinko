@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
         maxBalls = ballsRemaining;
 
         gameOverText.gameObject.SetActive(false);
+
+        UpdateText();
     }
 
     public void UpdateText()

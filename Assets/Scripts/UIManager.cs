@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public Canvas creditsCanvas;
+    public Canvas creditsCanvas, instructionsCanvas;
     public TMP_Text dropIndicatorText;
 
     private void Start()
     {
         creditsCanvas.enabled = false;
+        instructionsCanvas.enabled = false;
     }
 
     private void Update()
@@ -29,6 +30,16 @@ public class UIManager : MonoBehaviour
     public void CloseCredits()
     {
         creditsCanvas.enabled = false;
+    }
+    
+    public void OpenInstructions()
+    {
+        instructionsCanvas.enabled = true;
+    }
+    
+    public void CloseInstructions()
+    {
+        instructionsCanvas.enabled = false;
     }
 
     public void RestartGame()
