@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
         maxBalls = ballsRemaining;
 
         gameOverText.gameObject.SetActive(false);
+
+        UpdateText();
     }
 
     public void UpdateText()
@@ -91,6 +93,7 @@ public class GameManager : MonoBehaviour
         bluePegsHitThisDrop = 0;
         score = 0;
         gameEnded = false;
+        gameOverText.gameObject.SetActive(false);
 
         UpdateText();
 
